@@ -21,7 +21,7 @@ module Permissions =
     let LoadData (user: User) = true
 
 module Authentication =
-    let mutable private currentUser: User option = None
+    let private mutable currentUser: User option = None
     
     let login (username: string) (password: string) : Result<User, string> =
         if username.ToLower() = "admin" && password = "admin123" then
@@ -52,7 +52,7 @@ module AccessControl =
             try
                 Ok (operation ())
             with ex -> 
-                Error $"Operation failed: {ex.Message}"
+                Error (sprintf "Operation failed: %s" ex.Message)
         else
             Error "Access Denied"
     
